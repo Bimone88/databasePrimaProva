@@ -1,0 +1,60 @@
+Il database prima_database è stato creato utilizzando pgAdmin.
+Ho creato il database e poi le tabelle con le colonne:
+
+CREATE TABLE Clienti (
+    NumeroCliente SERIAL PRIMARY KEY,
+    Nome VARCHAR(100),
+    Cognome VARCHAR(100),
+    AnnoDiNascita INT,
+    RegioneResidenza VARCHAR(100)
+);
+
+CREATE TABLE Prodotti (
+    IdProdotto SERIAL PRIMARY KEY,
+    Descrizione TEXT,
+    InProduzione BOOLEAN,
+    InCommercio BOOLEAN,
+    DataAttivazione DATE,
+    DataDisattivazione DATE
+);
+
+CREATE TABLE Fornitori (
+    NumeroFornitore SERIAL PRIMARY KEY,
+    Denominazione VARCHAR(100),
+    RegioneResidenza VARCHAR100)
+);
+
+CREATE TABLE Fatture (
+    NumeroFattura SERIAL PRIMARY KEY,
+    Tipologia VARCHAR(255),
+    Importo DECIMAL(10, 2),
+    Iva INT,
+    IdCliente INT REFERENCES Clienti (NumeroCliente),
+    DataFattura DATE,
+    NumeroFornitore INT REFERENCES Fornitori (NumeroFornitore)
+);
+
+doèpo di che ho creato gli esempi per i fornitori e clienti.
+
+CLIENTI:
+
+INSERT INTO Clienti (Nome, Cognome, AnnoDiNascita, RegioneResidenza) VALUES
+('Sara', 'Cinesca', 1980, 'Sardegna'),
+('Igor', 'Miti', 1970, 'Konoha'),
+('Pascal', 'Alpesto', 1998, 'Genova');
+
+
+FORNITORI:
+INSERT INTO Fornitori (Denominazione, RegioneResidenza) VALUES
+('Fornitore 1', 'Sardegna'),
+('Fornitore 2', 'Konoha');
+
+dopo cio ho fatto le query per estrarre informazioni dal db:
+1) Estrarre tutti i clienti con nome Mario:
+ SELECT * FROM Clienti WHERE Nome = 'Mario';
+/////////////
+2)Estrarre il nome e il cognome dei clienti nati nel 1982:
+SELECT Nome, Cognome FROM Clienti WHERE AnnoDiNascita = 1982;
+///////////////////
+3) Estrarre il numero delle fatture con IVA al 20%:
+SELECT COUNT(*) FROM Fatture WHERE Iva = 20;
